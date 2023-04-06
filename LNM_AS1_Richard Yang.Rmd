@@ -1,0 +1,118 @@
+---
+title: "LNM_AS1"
+author: "Zhilin Yang"
+date: '2023-01-22'
+output: html_document
+---
+Q1
+```{r}
+
+#(A)
+divvy = read.delim('C:/Users/Richa/Downloads/divvy.txt')
+divvy
+plot(divvy$Speed,divvy$Distance,pch=16, col='red', cex=1.2)
+abline(lm(divvy$Distance ~ divvy$Speed), col='blue' , lty='dashed')
+```
+As we can see from the plot, the fitted line can describe the trend well.
+
+#(B)
+```{r}
+model = lm(divvy$Distance ~ divvy$Speed)
+summary(model)
+```
+
+#The R square of the model is 0.9533 which is a very large R square value. It shows that 95.33% (a very large portion) of variation in Distance can be explained by the variation in Speed. 
+
+#(C)
+
+#As we can see from the plot and the R square value, the predictor and reponse variable has a relatively linear relationship.
+
+#In this model, the following Cautions alingned with the interpretation of R-square
+
+#Caution #2:A large R Square does not necessarily mean that the estimated regression line fits the data well.There might be another function better describes the trend in the data. As we can see the response varialble and predictor are not perfectly linear.
+
+#Caution #4 Correlation does not imply causation. We need further demonstration such as Hypothesis Testing to decide the distribution and the relationship.
+
+#In this model, the following cautions are less appropriate:
+#Caution #3: The coefficient of determination R Square and the correlation coefficient R can both be greatly affected by just adding one data(or a few) data point.This is less appropriate because there are no values significant outliers in this data
+
+#Caution #6: A 'statistically significant' r sqaure does not imply slope beta1 is meaningfully different from 0. 
+# In this data, the p-value of slope beta1 is 2.2e-16 which means: the chance that beta1 is insigficant is zero
+
+#Caution #7: A large r squared value does not mean that a useful prediction of y can be made. It might be impossible to get valid prediction intervals.
+# In this data, the standard error of beta1 is very low, which leads to the fact that the there exists a valid confidence interval
+ 
+
+Q2
+#(A)
+```{r}
+
+soccer = read.delim('C:/Users/Richa/Downloads/soccer.txt')
+plot(soccer$Sprint,soccer$Score,,pch=16, col='red', cex=1.2,main = 'Score VS Sprint_Q2A')
+model_soccer = lm(soccer$Score~soccer$Sprint)
+abline(model_soccer,, col='blue' )
+summary(model_soccer)$r.squared
+```
+#The R-Square is 0.3756, there are only 37.6% variation in y can be explained by x. It shows that the model des not describe the trend well
+
+
+#(B)
+```{r}
+
+soccer[soccer==210]=NA
+soccer_B = na.omit(soccer)
+soccer_B
+
+model_B = lm(soccer_B$Score~soccer_B$Sprint)
+summary(model_B)$r.squared
+plot(soccer$Sprint,soccer$Score,,pch=16, col='red', cex=1.2,main = 'Score VS Sprint_Q2B')
+abline(model_B,, col='green',lty='dashed')
+```
+
+
+
+#The R Sqaure Value decreased from 0.3756 to 0.1908 after removing the two data points.
+
+#(C)
+#As we can see from the above results, the R sqaure can be largely affected by the outliers and other extreme values in the data. Therefore, it is important to have a scatterplot to understand whether the correlation coefficient is affected by outliers or not.
+
+Q3
+```{r}
+#(A)
+death = read.delim('C:/Users/Richa/Downloads/death.txt')
+
+model_3a = lm(death$deaths~death$budget,data = death)
+plot(death$budget,death$deaths,,pch=16, col='red', cex=0.8,main = 'deaths vs budget')
+abline(model_3a, col='blue')
+summary(model_3a)$r.squared
+#I do not think the budget caused the deaths. Because there are no strong evidences from the scatterplot. The data points are not closely distribution around the fitted line which means that the variance is large and changing as well.
+
+#(B)
+model_3B = lm(death$budget~death$deaths,data = death)
+plot(death$deaths,death$budget,,pch=16, col='red', cex=0.8,main = 'budget VS deaths')
+abline(model_3B, col='blue')
+summary(model_3B)$r.squared
+#I do not think the deaths caused the budget. Although there are some linear relationship, there are not enough evidence the prove causality.
+
+#(C)
+model_3c = lm(death$budget~death$year,data = death)
+plot(death$year,death$budget,,pch=16, col='red', cex=0.8,main = 'budget VS year')
+abline(model_3c, col='blue')
+summary(model_3c)$r.squared
+
+#(D)
+model_3c = lm(death$deaths~death$year,data = death)
+plot(death$year,death$deaths,,pch=16, col='red', cex=0.8,main = 'deaths VS year')
+abline(model_3c, col='blue')
+summary(model_3c)$r.squared
+
+
+```
+#(E)
+
+#As we can see from (A) and (B), there is a positive correlation between budget and deaths.
+
+#As we can see from (C) and (D), both of the budget and deaths are increasing along with time. Therefore, this lead to a fact: The positive correlation between deaths and budget may be larged affected by the lurking variable time. 
+
+#Along with time, the government expenditure budget, the total population and the accessibility of drugs due to technology progress might all contributed to the drug-induced deaths. The two variables (deaths and budget) have positive correlations might because they are both increasing along with time. 
+
